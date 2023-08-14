@@ -22,7 +22,38 @@
             <el-divider></el-divider>
             <div class="main" v-html="listArticl[0].context"></div>
         </el-main>
-        
+        <div class="comment-app">
+    <h2 class="app-title">评论列表</h2>
+    <el-card class="comment-list">
+      <el-comment v-for="(comment, index) in comments" :key="index" class="comment-item">
+        <el-comment-avatar>
+          <img src="avatar.jpg" alt="Avatar" class="avatar">
+        </el-comment-avatar>
+        <el-comment-content>
+          <el-comment-header>
+            <span class="comment-author">{{ comment.author }}</span>
+            <span class="comment-timestamp">{{ timeAgo(comment.timestamp) }}</span>
+          </el-comment-header>
+          <p class="comment-text">{{ comment.text }}</p>
+        </el-comment-content>
+      </el-comment>
+    </el-card>
+
+    <h2 class="app-title">发布评论</h2>
+    <el-card class="comment-form">
+      <el-form :model="newComment" label-position="top" class="form">
+        <el-form-item label="作者">
+          <el-input v-model="newComment.author" class="input-field"></el-input>
+        </el-form-item>
+        <el-form-item label="评论内容">
+          <el-input type="textarea" v-model="newComment.text" class="input-field"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitComment" class="submit-button">发布评论</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
     </div>
 </template>
 
@@ -137,16 +168,52 @@ export default {
                     create_time: "2023/8/14 13:34:23",
                     reading_num: 80
                 }
-            ]
+            ],
+            comments: [
+                {
+                    author: "User1",
+                    text: "这是第一条评论",
+                    timestamp: "2023-08-14 10:00"
+                },
+                {
+                    author: "User2",
+                    text: "这是第二条评论",
+                    timestamp: "2023-08-14 11:30"
+                }
+                // ... 更多评论
+            ],
+            newComment: {
+                author: "",
+                text: ""
+            }
         };
     },
     mounted() {
         this.articleId = this.$route.params.articleId;
+    },
+    methods: {
+       
+        timeAgo(timestamp) {
+            // 实现一个函数来计算时间差并返回一个友好的时间描述，比如 "5分钟前"
+            // 可以使用日期库来辅助处理时间
+        },
+        submitComment() {
+            if (this.newComment.author && this.newComment.text) {
+                this.newComment.timestamp = new Date().toLocaleString();
+                this.comments.push({ ...this.newComment });
+                this.newComment.author = "";
+                this.newComment.text = "";
+            }
+        }
     }
 };
 </script>
 
 <style lang="less" scoped>
+.details {
+    background: #dfe6e9;
+}
+
 .breadcrumb {
     padding: 20px 20px 0px 20px;
 }
@@ -158,4 +225,64 @@ h1 {
     justify-content: space-evenly;
     gap: 20px;
 }
+
+.comment-app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.comment-list {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.comment-author {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.comment-timestamp {
+  font-size: 14px;
+  color: #888;
+}
+
+.comment-text {
+  margin-top: 5px;
+}
+
+.comment-form {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.input-field {
+  width: 100%;
+}
+
+.submit-button {
+  width: 100%;
+}
+
 </style>

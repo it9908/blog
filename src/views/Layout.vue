@@ -32,6 +32,7 @@ export default {
 
 <style lang="less" scoped>
 .container {
+
     width: 100%;
     background: linear-gradient(90deg, #3498db, #e74c3c);
     animation: dynamicBackground s linear infinite alternate;
@@ -56,10 +57,6 @@ export default {
     padding: 10px;
     margin: 0 auto;
     width: 80%;
-    .router-box {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
     .sidebar {
         padding: 8px;
         box-sizing: border-box;

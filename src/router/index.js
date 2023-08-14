@@ -10,21 +10,36 @@ const routes = [
         name: 'layout',
         component: Layout,
         redirect: '/article',
+        meta:{
+            title:'首页'
+        },
         children: [
             {
                 path: 'article',
+                meta:{
+                    title:'文章'
+                },
                 component: () => import('@/views/Article.vue')
             },
             {
                 path: 'messages',
+                meta:{
+                    title:'留言墙'
+                },
                 component: () => import('@/views/MessageWall.vue')
             },
             {
                 path: 'about',
+                meta:{
+                    title:'关于本站'
+                },
                 component: () => import('@/views/About.vue')
             },
             {
                 path: 'details/:articleId',
+                meta:{
+                    title:'xxx'
+                },
                 component: () => import('@/views/DetailPage.vue'),
                 props: true
             }

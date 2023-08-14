@@ -43,7 +43,6 @@
 }
 
 .sidebar {
-    // padding-top: 8px;
     display: flex;
     align-items: center;
     flex-direction: column;
