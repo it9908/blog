@@ -24,7 +24,7 @@
         </div>
         <div class="head_list">
             <el-menu class="el-menu-demo" mode="horizontal" text-color="#fff">
-                <el-menu-item><span @click="goSignIn">登录</span></el-menu-item>
+                <el-menu-item><span @click="goSignIn">后台管理</span></el-menu-item>
             </el-menu>
         </div>
     </div>
@@ -42,7 +42,7 @@ export default {
     methods: {
         // 前往登录页
         goSignIn(){
-            alert("goSignIn")
+            this.$router.push({path:"/login"})
         },
         
     }
@@ -59,7 +59,7 @@ export default {
 }
 .header {
     display: grid;
-    grid-template-columns: 200px 2fr 1fr;
+    grid-template-columns: 200px 2fr 100px;
 }
 .head_list {
     height: 60px;

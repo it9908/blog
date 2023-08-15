@@ -4,47 +4,24 @@
             <Header></Header>
         </el-header>
         <div class="main">
-            <el-row type="flex" :gutter="10" class="row-bg">
-                <el-col :span="18">
-                    <div class="router-box">
-                        <router-view></router-view>
-                    </div>
-                </el-col>
-                <el-col :span="6">
-                    <div class="sidebar">
-                        <Sidebar></Sidebar>
-                    </div>
-                </el-col>
-            </el-row>
+            <router-view></router-view>
         </div>
         <Footer></Footer>
     </el-container>
 </template>
 
 <script>
-import Header from "./Header.vue";
-import Sidebar from "./Sidebar.vue";
-import Footer from "./Footer.vue";
+import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 export default {
-    components: { Header, Sidebar, Footer }
+    components: { Header, Footer }
 };
 </script>
 
 <style lang="less" scoped>
 .container {
-
     width: 100%;
-    background: linear-gradient(90deg, #3498db, #e74c3c);
-    animation: dynamicBackground s linear infinite alternate;
-
-    @keyframes dynamicBackground {
-        0% {
-            background-position: 0% 0%;
-        }
-        100% {
-            background-position: 100% 100%;
-        }
-    }
+        background: #121212;
 }
 .el-header {
     z-index: 3000;
@@ -57,6 +34,7 @@ export default {
     padding: 10px;
     margin: 0 auto;
     width: 80%;
+
     .sidebar {
         padding: 8px;
         box-sizing: border-box;

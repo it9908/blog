@@ -10,41 +10,45 @@ const routes = [
         name: 'layout',
         component: Layout,
         redirect: '/article',
-        meta:{
-            title:'首页'
+        meta: {
+            title: '首页'
         },
         children: [
             {
                 path: 'article',
-                meta:{
-                    title:'文章'
+                meta: {
+                    title: '文章'
                 },
                 component: () => import('@/views/Article.vue')
             },
             {
                 path: 'messages',
-                meta:{
-                    title:'留言墙'
+                meta: {
+                    title: '留言墙'
                 },
                 component: () => import('@/views/MessageWall.vue')
             },
             {
                 path: 'about',
-                meta:{
-                    title:'关于本站'
+                meta: {
+                    title: '关于本站'
                 },
                 component: () => import('@/views/About.vue')
             },
             {
                 path: 'details/:articleId',
-                meta:{
-                    title:'xxx'
+                meta: {
+                    title: 'xxx'
                 },
                 component: () => import('@/views/DetailPage.vue'),
                 props: true
             }
         ]
     },
+    {
+        path: '/login',
+        component: () => import('../views/Login.vue')
+    }
 ]
 
 const router = new VueRouter({
