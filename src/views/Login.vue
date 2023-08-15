@@ -2,15 +2,15 @@
     <div class="login">
         <h1>博客后台管理系统</h1>
         <div class="form-box">
-            <el-form label-position="top" label-width="80px" :model="formLabelAlign" size="small">
+            <el-form label-position="top" label-width="80px" :model="formData" size="small">
                 <el-form-item>
-                    <el-input v-model="formLabelAlign.name" placeholder="用户名/账户"></el-input>
+                    <el-input v-model="formData.username" placeholder="用户名/账户"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-input v-model="formLabelAlign.region" placeholder="密码"></el-input>
+                    <el-input v-model="formData.password" placeholder="密码" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="Login">登录</el-button>
+                    <el-button @click="login">登录</el-button>
                 </el-form-item>
                 <el-form-item>
                     <div class="goback-btn">
@@ -25,21 +25,72 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { Login } from "../api/user";
 export default {
     name: "LoginPage",
+    beforeRouteEnter(to, from, next) {
+        // 使用回调函数获取组件实例
+        next(vm => {
+            // 获取登录状态
+            const isLoggedIn = vm.isLoggedIn;
+            if (isLoggedIn) {
+                // 已登录，跳转到目标页面
+                next("/console"); // 修改为你的目标页面路由
+            } else {
+                next();
+            }
+        });
+    },
+    computed: {
+        ...mapState("auth", ["isLoggedIn"])
+    },
     data() {
         return {
-            formLabelAlign: {
-                name: "",
-                region: "",
-                type: ""
+            formData: {
+                username: "",
+                password: ""
             }
         };
     },
     mounted() {},
     methods: {
-        Login() {
-            alert("登录");
+        async login() {
+            const res = await Login(this.formData);
+            console.log(res);
+            localStorage.setItem("token", res.data.token);
+            if (res.data.code === 200) {
+                // 存储登录状态到 Vuex
+                this.$store.dispatch("auth/loginSuccess");
+                // 动态添加路由
+                this.$router.addRoute({
+                    path: "/console",
+                    name: "Console",
+                    meta: {
+                        title: "控制台"
+                    },
+                    component: () => import("../views/consoles/Layout.vue"),
+                    children:[
+                        {
+                            path:'home',
+                            component: () => import("../views/consoles/Home.vue"),
+                        },
+                        {
+                            path:'articles',
+                            component: () => import("../views/consoles/ArticleManage.vue"),
+                        },
+                        {
+                            path:'commemts',
+                            component: () => import("../views/consoles/CommentManage.vue"),
+                        },
+                        {
+                            path:'release',
+                            component: () => import("../views/consoles/ArticlePublishing.vue"),
+                        }
+                    ]
+                });
+                this.$router.push({ path: "/console" });
+            }
         },
         goBack() {
             this.$router.replace({ path: "/" });

@@ -24,27 +24,28 @@
         </div>
         <div class="head_list">
             <el-menu class="el-menu-demo" mode="horizontal" text-color="#fff">
-                <el-menu-item><span @click="goSignIn">后台管理</span></el-menu-item>
+                <el-menu-item>
+                    <span @click="goSignIn">后台管理</span>
+                </el-menu-item>
             </el-menu>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     name: "Header",
+    
     data() {
-        return {
-            
-        };
+        return {};
     },
 
     methods: {
         // 前往登录页
-        goSignIn(){
-            this.$router.push({path:"/login"})
-        },
-        
+        goSignIn() {
+            this.$router.push({ path: "/login" });
+        }
     }
 };
 </script>

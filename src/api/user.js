@@ -54,3 +54,12 @@ export function postComments(data){
         data
     })
 }
+
+// http://localhost:3000/users/login
+export function Login(data){
+    return request({
+        url:`/users/login`,
+        method:"POST",
+        data
+    })
+}

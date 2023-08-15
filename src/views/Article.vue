@@ -37,7 +37,7 @@
                     </ul>
                 </el-col>
                 <el-col :span="4">
-                    <img :src="item.cover_url" />
+                    <el-image style="width: 200px; height: 100%" :src="item.cover_url" fit="cover"></el-image>
                 </el-col>
             </el-row>
         </div>
@@ -101,7 +101,7 @@ export default {
             const res = await search(this.keyWord);
             // console.log(res);
             this.listArticl = res.data.data;
-            this.changeStyle("none", ".el-autocomplete-suggestion"); 
+            this.changeStyle("none", ".el-autocomplete-suggestion");
         },
         // 选中提示关键字触发
         async handleSelect(item) {
@@ -129,7 +129,6 @@ export default {
         },
         // 详情页
         goDetailPage(articleId) {
-            alert(articleId);
             this.$router.push({
                 path: `details/${articleId}`,
                 params: { articleId }
@@ -160,7 +159,7 @@ export default {
     }
 }
 .list {
-    padding: 8px 20px;
+    padding: 8px 16px;
     box-sizing: border-box;
     border-bottom: 1px solid #ffffff;
     position: relative;

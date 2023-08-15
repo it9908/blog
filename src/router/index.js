@@ -5,19 +5,24 @@ import Layout from '../views/Layout.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    // 其他路由
+    {
+        path: '*',
+        component: () => import('../views/404/NotFound.vue')
+    },
     {
         path: '/',
         name: 'layout',
         component: Layout,
         redirect: '/article',
         meta: {
-            title: '首页'
+            title: '首页',
         },
         children: [
             {
                 path: 'article',
                 meta: {
-                    title: '文章'
+                    title: '文章',
                 },
                 component: () => import('@/views/Article.vue')
             },
@@ -41,7 +46,7 @@ const routes = [
                     title: 'xxx'
                 },
                 component: () => import('@/views/DetailPage.vue'),
-                props: true
+                // props: true
             }
         ]
     },
@@ -51,10 +56,12 @@ const routes = [
     }
 ]
 
+
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
 })
+
 
 export default router
