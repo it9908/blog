@@ -1,6 +1,6 @@
 <template>
   <div>
-    留言墙
+    建设中...
   </div>
 </template>
 
@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style lang="less" scoped>
+div{
+    color: #ffffff;
+}
+</style>>

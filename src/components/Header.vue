@@ -2,7 +2,7 @@
     <div class="header">
         <div class="head_list">
             <el-menu mode="horizontal" class="el-menu-demo" text-color="#fff">
-                <el-menu-item>
+                <el-menu-item index="1">
                     <slot name="logo">Mxz'blog</slot>
                 </el-menu-item>
             </el-menu>
@@ -17,7 +17,7 @@
                 router
                 :default-active="$route.path"
             >
-                <el-menu-item index="/article">文章</el-menu-item>
+                <el-menu-item index="/article/1">文章</el-menu-item>
                 <el-menu-item index="/messages">留言墙</el-menu-item>
                 <el-menu-item index="/about">关于本站</el-menu-item>
             </el-menu>

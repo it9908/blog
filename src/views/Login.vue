@@ -66,26 +66,36 @@ export default {
                 this.$router.addRoute({
                     path: "/console",
                     name: "Console",
+                    redirect: "/console/home",
                     meta: {
                         title: "控制台"
                     },
                     component: () => import("../views/consoles/Layout.vue"),
-                    children:[
+                    children: [
                         {
-                            path:'home',
-                            component: () => import("../views/consoles/Home.vue"),
+                            path: "home",
+                            meta: {
+                                title: "首页"
+                            },
+                            component: () =>
+                                import("../views/consoles/Home.vue")
                         },
                         {
-                            path:'articles',
-                            component: () => import("../views/consoles/ArticleManage.vue"),
+                            path: "articles",
+                            component: () =>
+                                import("../views/consoles/ArticleManage.vue")
                         },
                         {
-                            path:'commemts',
-                            component: () => import("../views/consoles/CommentManage.vue"),
+                            path: "commemts",
+                            component: () =>
+                                import("../views/consoles/CommentManage.vue")
                         },
                         {
-                            path:'release',
-                            component: () => import("../views/consoles/ArticlePublishing.vue"),
+                            path: "release",
+                            component: () =>
+                                import(
+                                    "../views/consoles/ArticlePublishing.vue"
+                                )
                         }
                     ]
                 });

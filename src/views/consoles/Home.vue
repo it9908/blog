@@ -1,6 +1,6 @@
 <template>
   <div>
-    Home
+    Home!
   </div>
 </template>
 
@@ -10,6 +10,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped> 
+div{
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 64px;
+}
 </style>

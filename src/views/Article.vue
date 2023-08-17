@@ -16,7 +16,9 @@
         <div class="list" v-for="item in listArticl" :key="item.id" @click="goDetailPage(item.id)">
             <el-row type="flex" justify="space-between">
                 <el-col :span="20">
-                    <div class="router-box">{{item.title}}</div>
+                    <div class="router-box">
+                        <h3>{{item.title}}</h3>
+                    </div>
                     <ul class="ul">
                         <li>
                             <img src="../assets/tags.png" />
@@ -27,7 +29,7 @@
                             分类：{{item.classification}}
                         </li>
                         <li>
-                            <img src="../assets/rend.png" />
+                            <img src="../assets/read.png" />
                             浏览量：{{item.read_total}}
                         </li>
                         <li>
@@ -37,7 +39,7 @@
                     </ul>
                 </el-col>
                 <el-col :span="4">
-                    <el-image style="width: 200px; height: 100%" :src="item.cover_url" fit="cover"></el-image>
+                    <el-image style="width: 200px; height: 100%" :src='backend_url+item.cover_url' fit="cover"></el-image>
                 </el-col>
             </el-row>
         </div>
@@ -56,21 +58,28 @@
 
 <script>
 import { getListArticle, getKeyWord, search } from "@/api/user";
+
 export default {
     name: "HomeView",
     data() {
         return {
+            currentPage: this.$route.params.currentPage || 1,
             keyWord: "",
             timeout: null,
             listArticl: [],
             total: null,
-            currentPage: 1,
             pageSize: 7,
-            keyWordAll: []
+            keyWordAll: [],
+            backend_url:''
         };
+    },
+    created() {
+        this.currentPage = this.$route.params.currentPage;
     },
     mounted() {
         this.getListArticles();
+        this.backend_url =
+            process.env.VUE_APP_BACKEND_URL || "http://localhost:3000";
     },
     methods: {
         // 获取联想关键字列表
@@ -119,6 +128,11 @@ export default {
         // 换页
         handleCurrentChange(val) {
             this.currentPage = val;
+            // 构建动态路由路径;
+            this.$router.push({
+                name: "Articles2",
+                params: { currentPage: this.currentPage }
+            });
             this.getListArticles();
         },
         // 获取文章列表
@@ -129,9 +143,9 @@ export default {
         },
         // 详情页
         goDetailPage(articleId) {
-            this.$router.push({
-                path: `details/${articleId}`,
-                params: { articleId }
+            this.$router.replace({
+                name: "Details",
+                params: { articleId: articleId, currentPage: this.currentPage }
             });
         }
     }
@@ -159,7 +173,7 @@ export default {
     }
 }
 .list {
-    padding: 8px 16px;
+    padding: 12px 16px;
     box-sizing: border-box;
     border-bottom: 1px solid #ffffff;
     position: relative;

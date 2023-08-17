@@ -52,6 +52,16 @@
             <el-form-item label="标题">
                 <el-input v-model="form.title"></el-input>
             </el-form-item>
+            <el-form-item label="分类">
+                <el-select v-model="form.classification" placeholder="请选择">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="封面">
                 <div class="image-b" v-if="isImg">
                     <el-image
@@ -76,7 +86,7 @@
                     class="upload-demo"
                     name="file"
                     drag
-                    action="http://localhost:3000/api/upload"
+                    :action="`${backend_url}/v1/upload`"
                     multiple
                     :limit="1"
                     :on-success="handleUploadSuccess"
@@ -93,18 +103,16 @@
             <el-form-item label="标签">
                 <div class="tag-list">
                     <el-tag
-                        :key="tag"
-                        v-for="tag in form.tags"
+                        :key="index+'tags'"
+                        v-for="(tag,index) in form.tags"
                         closable
                         :disable-transitions="false"
                         @close="handleClose(tag)"
-                        effect="dark"
-                    >{{ tag }}</el-tag>
-
+                    >{{tag}}</el-tag>
                     <el-input
                         class="input-new-tag"
                         v-if="inputVisible"
-                        v-model.trim="inputValue"
+                        v-model="inputValue"
                         ref="saveTagInput"
                         size="small"
                         @keyup.enter.native="handleInputConfirm"
@@ -119,8 +127,7 @@
                 </div>
             </el-form-item>
             <el-form-item label="内容">
-                <mavon-editor ref="md" :ishljs="true" @imgAdd="imgAdd" />
-                
+                <mavon-editor ref="md" v-model="form.context" :ishljs="true" @imgAdd="imgAdd" />
             </el-form-item>
             <el-form-item>
                 <el-button type="success" @click="release">发布</el-button>
@@ -132,24 +139,37 @@
 
 
 <script>
-import axios from "axios";
-// import { releasePosts } from "@/api/admin";
+import axios from 'axios'
+import { delImg, publishArticles } from "@/api/admin";
+
 export default {
     data() {
         return {
             file: null, // 存储文件对象,
             form: {
                 title: "",
+                classification: "",
                 cover_url: "",
-                tags: ["生活", "技术", "自定义"],
-                content: ""
+                tags: ["Java"],
+                context: ""
             },
             isImg: false,
             fileList: [],
             inputVisible: false,
             inputValue: "",
             backend_url: "",
-            accessToken: ""
+            accessToken: "",
+            options: [
+                {
+                    value: "技术",
+                    label: "技术"
+                },
+                {
+                    value: "生活",
+                    label: "生活"
+                }
+            ],
+            value: ""
         };
     },
     created() {
@@ -168,7 +188,7 @@ export default {
             var formdata = new FormData();
             formdata.append("file", file);
             axios({
-                url: `${this.backend_url}/api/upload`,
+                url: `${this.backend_url}/v1/upload`,
                 method: "POST",
                 data: formdata,
                 headers: {
@@ -184,61 +204,71 @@ export default {
                 this.$refs["md"].$img2Url(pos, imgUrl);
             });
         },
-
+        // 移除标签
         handleClose(tag) {
+            if (this.form.tags.length === 1) {
+                this.$message("最少存在一个标签");
+                return;
+            }
             this.form.tags.splice(this.form.tags.indexOf(tag), 1);
         },
-
+        //
         showInput() {
             this.inputVisible = true;
-            this.$nextTick(() => {
+            this.$nextTick(_ => {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
         },
-
+        //
         handleInputConfirm() {
-            let inputValue = this.inputValue;
-            if (!inputValue) {
-                this.inputVisible = false;
-                return;
-            }
-            if (!this.form.tags.includes(inputValue)) {
-                // 如果用户输入的标签不为空，并且当前标签列表中不存在该标签，才添加
-                this.form.tags.push(inputValue);
-                this.inputValue = "";
-                return;
-            }
+            console.log(this.form.tags);
 
+            let inputValue = this.inputValue;
+            if (inputValue) {
+                if (this.form.tags.length > 2) {
+                    this.inputVisible = false;
+                    this.inputValue = "";
+                    this.$message("最多存在三个标签");
+                    return;
+                }
+                this.form.tags.push(inputValue);
+            }
             this.inputVisible = false;
             this.inputValue = "";
         },
         // 上传成功时
         handleUploadSuccess(response, file, fileList) {
-            // console.log(fileList);
+            console.log(fileList);
             // 处理上传成功的逻辑，例如添加文件到
             const imgName = fileList[0].response.data;
             console.log(imgName);
             this.form.cover_url = imgName;
             this.isImg = true;
         },
-
         // 移除封面
-        removeCover() {
+        async removeCover() {
+            const imagePath = this.form.cover_url;
+            const imageName = imagePath.substring(
+                imagePath.lastIndexOf("/") + 1
+            );
+
+            const res = await delImg(imageName);
             this.fileList = [];
             this.isImg = false;
         },
+        // 发布
         async release() {
-            // console.log(this.form);
-            // const res = await releasePosts(this.form);
-            // this.$message({
-            //     showClose: true,
-            //     message: "发布成功",
-            //     type: "success"
-            // });
-            // for (let key in this.form) {
-            //     this.form[key] = "";
-            // }
-            // this.isImg = false;
+            console.log(this.form);
+            const res = await publishArticles(this.form);
+            this.$message({
+                showClose: true,
+                message: "发布成功",
+                type: "success"
+            });
+            for (let key in this.form) {
+                this.form[key] = "";
+            }
+            this.isImg = false;
         }
     }
 };

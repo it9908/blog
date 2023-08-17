@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = process.env.VUE_APP_API_URL
+const baseURL = process.env.VUE_APP_BACKEND_URL
 // 创建一个 Axios 实例
 const request = axios.create({
   baseURL: baseURL,

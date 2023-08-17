@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style lang="less" scoped>
+div{
+    color: #ffffff;
+}
+</style>>

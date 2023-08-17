@@ -21,10 +21,20 @@ const routes = [
         children: [
             {
                 path: 'article',
+                name: 'Articles',
                 meta: {
                     title: '文章',
                 },
-                component: () => import('@/views/Article.vue')
+                component: () => import('@/views/Article.vue'),
+            },
+            {
+                path: 'article/:currentPage',
+                name: 'Articles2',
+                meta: {
+                    title: '文章',
+                },
+                component: () => import('@/views/Article.vue'),
+                props:true
             },
             {
                 path: 'messages',
@@ -41,15 +51,16 @@ const routes = [
                 component: () => import('@/views/About.vue')
             },
             {
-                path: 'details/:articleId',
+                path: 'details/:articleId/:currentPage',
+                name: 'Details',
                 meta: {
-                    title: 'xxx'
+                    title: '详情内容'
                 },
                 component: () => import('@/views/DetailPage.vue'),
-                // props: true
-            }
+            },
         ]
     },
+
     {
         path: '/login',
         component: () => import('../views/Login.vue')
