@@ -29,16 +29,20 @@
                 <h2>评论</h2>
             </div>
             <el-divider></el-divider>
-            <div class="list" v-for="item in comments" :key="item.id">
-                <img src="../assets/user.png" alt srcset />
-                <div class="right">
-                    <div class="box">
-                        <div class="name">{{item.name}}</div>
-                        <span class="time">{{item.create_time}}</span>
+            <div v-if="comments.length">
+                <div class="list" v-for="item in comments" :key="item.id">
+                    <img src="../assets/user.png" alt srcset />
+                    <div class="right">
+                        <div class="box">
+                            <div class="name">{{item.name}}</div>
+                            <span class="time">{{item.create_time}}</span>
+                        </div>
+                        <div class="comment">{{item.content}}</div>
                     </div>
-                    <div class="comment">{{item.content}}</div>
                 </div>
             </div>
+            <p v-else>暂无评论</p>
+
             <el-divider></el-divider>
             <div class="form-box">
                 <el-form ref="form" :mode="form" label-width="80px">
@@ -208,4 +212,6 @@ h1 {
         background-color: #000000; /* 设置滚动条轨道背景色 */
     }
 }
+
+@import url("../assets/media_queries/front_desk/detail-page.less");
 </style>

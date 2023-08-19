@@ -20,8 +20,8 @@ export default {
 
 <style lang="less" scoped>
 .container {
-    width: 100%;
-        background: #121212;
+    background: #121212;
+    overflow: hidden;
 }
 .el-header {
     z-index: 3000;
@@ -43,4 +43,6 @@ export default {
         background: #eeeeee;
     }
 }
+
+@import url('../assets/media_queries/front_desk/layout.less');
 </style>

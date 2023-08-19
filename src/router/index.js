@@ -33,8 +33,7 @@ const routes = [
                 meta: {
                     title: '文章',
                 },
-                component: () => import('@/views/Article.vue'),
-                props:true
+                component: () => import('@/views/Article.vue')
             },
             {
                 path: 'messages',

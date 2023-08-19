@@ -10,7 +10,7 @@
     line-height: 3rem;
     background: #487eb0;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     .avatar {
         display: flex;
@@ -34,17 +34,6 @@
 
 <template>
     <div class="nav">
-        <el-breadcrumb class="breadcrumb" separator="/">
-            <el-breadcrumb-item
-                v-for="(r, index) in $route.matched"
-                :key="index + '1'"
-                :to="{ path: r.path }"
-            >
-                {{
-                r.meta.title
-                }}
-            </el-breadcrumb-item>
-        </el-breadcrumb>
         <div class="avatar">
             <p>欢迎回来：{{info.name}}</p>
             <img :src="backend_url+info.avatar_url" alt srcset />
@@ -59,7 +48,7 @@ export default {
     data() {
         return {
             info: [],
-            backend_url:''
+            backend_url: ""
         };
     },
     mounted() {

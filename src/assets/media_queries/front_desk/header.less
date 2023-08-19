@@ -1,0 +1,14 @@
+/* 在最大宽度为 480px 时应用的样式 */
+@media (max-width: 480px) {
+    .header {
+        display: grid;
+        grid-template-columns: 1fr 4rem;
+        .head_list:first-of-type .el-menu {
+            display: flex;
+            justify-content: start;
+        }
+        .shrink-bar{
+            // display: block;
+        }
+    }
+}

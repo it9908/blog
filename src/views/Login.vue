@@ -82,16 +82,25 @@ export default {
                         },
                         {
                             path: "articles",
+                            meta: {
+                                title: "文章管理"
+                            },
                             component: () =>
                                 import("../views/consoles/ArticleManage.vue")
                         },
                         {
                             path: "commemts",
+                            meta: {
+                                title: "评论管理"
+                            },
                             component: () =>
                                 import("../views/consoles/CommentManage.vue")
                         },
                         {
                             path: "release",
+                            meta: {
+                                title: "发布文章"
+                            },
                             component: () =>
                                 import(
                                     "../views/consoles/ArticlePublishing.vue"

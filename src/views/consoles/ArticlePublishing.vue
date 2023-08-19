@@ -123,7 +123,7 @@
                         class="button-new-tag"
                         size="small"
                         @click="showInput"
-                    >+ New Tag</el-button>
+                    >+ 自定义</el-button>
                 </div>
             </el-form-item>
             <el-form-item label="内容">
@@ -150,7 +150,7 @@ export default {
                 title: "",
                 classification: "",
                 cover_url: "",
-                tags: ["Java"],
+                tags: [],
                 context: ""
             },
             isImg: false,

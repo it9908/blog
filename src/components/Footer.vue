@@ -3,7 +3,7 @@
     <div class="footer-content">
       <div class="footer-left">
         <span>版权 © 2023 Mxz'blog</span>
-        <span>备案号：粤ICP备12345678号</span>
+        <!-- <span>备案号：粤ICP备12345678号</span> -->
       </div>
       <div class="footer-right">
         <span>作者：Mxz</span>

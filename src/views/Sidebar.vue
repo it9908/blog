@@ -30,7 +30,7 @@
             </el-card>
         </div>
     </div>
-</template>
+</template>.
 
 <style lang="less" scoped>
 // 头像旋转

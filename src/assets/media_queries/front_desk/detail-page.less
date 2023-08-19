@@ -1,0 +1,16 @@
+/* 在最大宽度为 480px 时应用的样式 */
+@media (max-width: 480px) {
+    .details {
+        .ul {
+            flex-direction: column;
+        }
+        .name {
+            white-space: nowrap;
+            /* 不换行 */
+            overflow: hidden;
+            /* 超出部分隐藏 */
+            text-overflow: ellipsis;
+            /* 添加省略号 */
+        }
+    }
+}
