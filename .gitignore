@@ -6,7 +6,7 @@ node_modules
 # local env files
 .env.local
 .env.*.local
-# 忽略 .env 文件
+# 忽略 .env.production 文件
 .env.production
 
 # Log files
