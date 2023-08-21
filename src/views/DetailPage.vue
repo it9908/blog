@@ -1,14 +1,9 @@
 <template>
     <div class="details">
         <div class="breadcrumb">
-            <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-                <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-            </el-breadcrumb>-->
             <el-page-header @back="goBack()" content="详情页面"></el-page-header>
         </div>
+
         <el-divider></el-divider>
         <el-main>
             <div class="main-title">
@@ -23,6 +18,7 @@
             <el-divider></el-divider>
             <div class="main" v-highlight v-html="article.context"></div>
         </el-main>
+
         <el-divider></el-divider>
         <div class="comment-app">
             <div class="title">
@@ -63,6 +59,7 @@
                 </el-form>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -89,10 +86,8 @@ export default {
         };
     },
     mounted() {
-        // console.log(this.$route);
         this.articleId = this.$route.params.articleId;
         this.currentPage = this.$route.params.currentPage;
-        // console.log(this.$route.params.currentPage);
         this.form.articleId = this.articleId;
         this.getArticles();
         this.getListComments();
@@ -100,7 +95,6 @@ export default {
     methods: {
         async release() {
             const res = await postComments(this.form);
-            console.log(res);
             this.form.name = "";
             this.form.content = "";
             this.getListComments();
@@ -109,7 +103,6 @@ export default {
         async getListComments() {
             const res = await getComments(this.articleId);
             this.comments = res.data.data;
-            console.log(this.comments);
         },
         async getArticles() {
             const res = await getArticle(this.articleId);
@@ -119,7 +112,6 @@ export default {
         },
         // 返回首页
         goBack() {
-            console.log(this.currentPage);
             this.$router.replace({
                 name: "Articles2",
                 params: { currentPage: this.currentPage }
@@ -189,9 +181,11 @@ h1 {
 .main {
     padding: 0 1rem;
 }
+/deep/pre img{
+    width: 100px;
+}
 /deep/pre code.hljs {
     box-shadow: 0 0px 20px rgba(0, 0, 0, 0.6); /* 添加阴影效果 */
-    // border-radius: 10px;
     margin: 2rem 0;
 
     &::-webkit-scrollbar {

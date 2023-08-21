@@ -81,6 +81,7 @@
                         ></el-button>
                     </el-popconfirm>
                 </div>
+
                 <el-upload
                     v-if="!isImg"
                     class="upload-demo"
@@ -99,6 +100,7 @@
                         <em>点击上传</em>
                     </div>
                 </el-upload>
+
             </el-form-item>
             <el-form-item label="标签">
                 <div class="tag-list">
@@ -221,8 +223,6 @@ export default {
         },
         //
         handleInputConfirm() {
-            console.log(this.form.tags);
-
             let inputValue = this.inputValue;
             if (inputValue) {
                 if (this.form.tags.length > 2) {
@@ -238,7 +238,6 @@ export default {
         },
         // 上传成功时
         handleUploadSuccess(response, file, fileList) {
-            console.log(fileList);
             // 处理上传成功的逻辑，例如添加文件到
             const imgName = fileList[0].response.data;
             console.log(imgName);

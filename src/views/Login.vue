@@ -112,7 +112,7 @@ export default {
             }
         },
         goBack() {
-            this.$router.replace({ path: "/" });
+            this.$router.push({ path: "/" });
         }
     }
 };
@@ -131,6 +131,7 @@ export default {
     align-items: center;
     background: url("../assets/bg.jpg") no-repeat;
     background-size: 100% auto;
+
     h1 {
         color: #ffffff;
     }
@@ -140,6 +141,7 @@ export default {
     width: 200px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
     .el-form {
         height: 100%;
     }

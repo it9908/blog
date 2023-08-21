@@ -13,7 +13,9 @@
                 @keyup="changeStyle('block', '.el-autocomplete-suggestion')"
             ></el-autocomplete>
         </div>
+
         <div class="list" v-for="item in listArticl" :key="item.id" @click="goDetailPage(item.id)">
+            <!-- PC布局 -->
             <el-row class="hidden-xs-only">
                 <el-col :xs="18" :sm="18" :md="20" :lg="20" :xl="20">
                     <div class="left">
@@ -41,44 +43,47 @@
                     </div>
                 </el-col>
                 <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4">
-                    <div>
-                        <el-image
-                            style="width: 200px; height: 100%"
-                            :src="backend_url+item.cover_url"
-                            fit="cover"
-                        ></el-image>
-                    </div>
+                    <el-image style="width: 100%" :src="backend_url+item.cover_url" fit="cover"></el-image>
                 </el-col>
             </el-row>
+            <!-- 移动端布局 -->
             <div class="content hidden-sm-and-up">
-                <div class="cover-box">
-                    <el-image :src="backend_url+item.cover_url" fit="cover"></el-image>
-                </div>
-                <div class="left">
-                    <div class="router-box">
-                        <h3>{{item.title}}</h3>
-                    </div>
-                    <ul class="ul">
-                        <li>
-                            <img class="list-icon" src="../assets/tags.png" />
-                            标签：{{item.tags}}
-                        </li>
-                        <li>
-                            <img class="list-icon" src="../assets/classification.png" />
-                            分类：{{item.classification}}
-                        </li>
-                        <li>
-                            <img class="list-icon" src="../assets/read.png" />
-                            浏览量：{{item.read_total}}
-                        </li>
-                        <li>
-                            <img class="list-icon" src="../assets/time.png" />
-                            发布时时间：{{item.create_time}}
-                        </li>
-                    </ul>
-                </div>
+                <el-skeleton style="width: 100%" :loading="loading" animated>
+                    <template slot="template">
+                        <el-skeleton-item variant="image" style="width: 100%; height: 200px;" />
+                        <div class style="margin-top:12px">
+                            <el-skeleton :rows="4" />
+                        </div>
+                    </template>
+                    <template>
+                        <el-image :src="backend_url+item.cover_url" fit="cover"></el-image>
+
+                        <div class="left">
+                            <h3 style="margin:10px 0px;">{{item.title}}</h3>
+                            <ul class="ul">
+                                <li>
+                                    <img class="list-icon" src="../assets/tags.png" />
+                                    标签：{{item.tags}}
+                                </li>
+                                <li>
+                                    <img class="list-icon" src="../assets/classification.png" />
+                                    分类：{{item.classification}}
+                                </li>
+                                <li>
+                                    <img class="list-icon" src="../assets/read.png" />
+                                    浏览量：{{item.read_total}}
+                                </li>
+                                <li>
+                                    <img class="list-icon" src="../assets/time.png" />
+                                    发布时时间：{{item.create_time}}
+                                </li>
+                            </ul>
+                        </div>
+                    </template>
+                </el-skeleton>
             </div>
         </div>
+
         <div class="pagination">
             <el-pagination
                 background
@@ -106,7 +111,8 @@ export default {
             total: null,
             pageSize: 7,
             keyWordAll: [],
-            backend_url: ""
+            backend_url: "",
+            loading: true
         };
     },
     created() {
@@ -173,11 +179,14 @@ export default {
         },
         // 获取文章列表
         async getListArticles() {
-            console.log(this.currentPage,this.pageSize);
+            this.loading = true;
             const res = await getListArticle(this.currentPage, this.pageSize);
-
             this.listArticl = res.data.data;
             this.total = res.data.total;
+            setTimeout(() => {
+                this.loading = false;
+            }, 2000);
+            console.log(this.listArticl);
         },
         // 详情页
         goDetailPage(articleId) {
@@ -228,8 +237,12 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    h3{
+        text-align: center;
+    }
 }
 .ul {
+    padding: 10px;
     display: flex;
     gap: 14px;
     bottom: 0;
@@ -248,5 +261,6 @@ export default {
     flex-direction: column;
     gap: 0.625rem;
 }
+
 @import url("../assets/media_queries/front_desk/articl.less");
 </style>
